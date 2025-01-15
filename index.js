@@ -15,7 +15,7 @@ app.get("/", async function (req, res) {
 
 app.use("/v1/callback", callbackRouter);
 
-app.listen(process.env.PORT, () => console.log(`Server running on http://localhost:${process.env.PORT}`));
+app.listen(process.env.PORT || 3333, () => console.log(`Server running on http://localhost:${process.env.PORT || 3333}`));
 
 const client = new Client({
   intents: [
@@ -62,4 +62,10 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 // Đăng nhập bot
-client.login(process.env.TOKEN);
+try {
+  await client.login(process.env.TOKEN);
+  console.log('🚀 Đăng nhập thành công!');
+  console.log('Author:', process.env.AUTHOR);
+} catch (error) {
+  console.log(`❌ Đăng nhập không thành công: ${error.message}`);
+}

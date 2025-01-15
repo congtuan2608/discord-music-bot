@@ -23,7 +23,8 @@ async function playSong(interaction) {
     }
 
     let query = options.getString("song");
-
+    console.log('Query input: ', query);
+    
     if (!query) {
       return interaction.followUp('Hãy nhập tên bài hát hoặc link YouTube!');
     }
