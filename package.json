@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node api/index.js",
+    "start": "node index.js",
     "build": "echo 'Skipping build step...'" 
   },
   "dependencies": {

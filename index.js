@@ -1,9 +1,9 @@
+import './src/global/index.js'; // Đảm bảo globals.js được import trước
 import dotenv from "dotenv";
 import { Client, GatewayIntentBits, SlashCommandBuilder } from "discord.js";
 import callbackRouter from './src/routers/callback.js'
 import express from "express";
 import COMMANDS from "./src/commands/index.js";
-
 
 dotenv.config();
 
@@ -46,18 +46,25 @@ client.once('ready', async () => {
   });
 
   // Đăng ký lệnh cho tất cả các server
-  await client.application.commands.set(commands);
-  console.log('Lệnh Slash đã được đăng ký!');
+  try {
+    await client.application.commands.set(commands);
+    console.log('Lệnh Slash đã được đăng ký!');
+  } catch (error) {
+    console.error('Lỗi khi đăng ký Slash commands:', error);
+  }
 });
 
 // Xử lý interaction (lệnh slash command)
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-
   const { commandName } = interaction;
 
   if (Object.hasOwnProperty.call(COMMANDS, commandName)) {
     await COMMANDS[commandName]?.func(interaction);
+  }
+
+
+  if (Object.hasOwnProperty.call(COMMANDS, interaction.customId)) {
+    await COMMANDS[interaction.customId]?.func(interaction);
   }
 });
 

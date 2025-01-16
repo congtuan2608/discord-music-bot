@@ -1,12 +1,12 @@
 import play from "play-dl";
 import ytStream from "yt-stream";
-import '../global/index.js'; // Đảm bảo globals.js được import trước
-import nextSong from "./skip.js";
+import nextSong from "./next.js";
+import { getMSG } from "../msg/index.js";
 
 const queueMap = global.queueMap;
 const playerMap = global.playerMap;
 
-async function playSong(interaction) {
+export default async function playSong(interaction) {
   try {
     const { options, member, guild, channel } = interaction;
     const playerInfo = {
@@ -24,7 +24,7 @@ async function playSong(interaction) {
 
     let query = options.getString("song");
     console.log('Query input: ', query);
-    
+
     if (!query) {
       return interaction.followUp('Hãy nhập tên bài hát hoặc link YouTube!');
     }
@@ -57,8 +57,9 @@ async function playSong(interaction) {
       }
       // Kiểm tra nếu query là video YouTube URL
       else if (play.yt_validate(trimmedQuery) === "video") {
+        const videoInfo = await play.video_info(trimmedQuery);
         const stream = await ytStream.stream(trimmedQuery);
-        queue.push({ title: trimmedQuery, stream });
+        queue.push({ title: videoInfo.video_details.title || 'unknown', stream });
         playerInfo.count += 1;
       }
       // Kiểm tra nếu query là tên bài hát
@@ -66,7 +67,7 @@ async function playSong(interaction) {
         const searchResults = await play.search(trimmedQuery, { limit: 1, filter: "audio" });
         if (searchResults.length === 0) {
           await interaction.followUp(`Không tìm thấy bài hát: ${trimmedQuery}`);
-          continue;
+          return
         }
         const currentSong = searchResults[0];
         const stream = await ytStream.stream(currentSong.url);
@@ -76,19 +77,14 @@ async function playSong(interaction) {
     }
 
     // Nếu chưa có bài hát nào đang phát, bắt đầu phát bài đầu tiên trong hàng đợi
-    if (queue.length === queries.length) {
-      if (!playerMap.has(guild.id)) {
-        await nextSong(interaction); // Gọi hàm để phát bài đầu tiên trong queue
-      } else {
-        interaction.followUp(`Đã thêm ${playerInfo.count} bài hát vào hàng đợi!`);
-      }
+    if (!playerMap.has(guild.id)) {
+      await nextSong(interaction); // Gọi hàm để phát bài đầu tiên trong queue
     } else {
       interaction.followUp(`Đã thêm ${playerInfo.count} bài hát vào hàng đợi!`);
     }
 
   } catch (error) {
-    interaction.followUp(`Cứu kaoo, hết hát được rồi (❌ Lỗi): ${error.message}`);
+    interaction.followUp(getMSG('error', error.message));
   }
 }
 
-export default playSong;
