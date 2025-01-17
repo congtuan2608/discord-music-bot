@@ -6,11 +6,11 @@ const BUTTONS = new ActionRowBuilder()
   .addComponents(
     new ButtonBuilder()
       .setCustomId('prevPage')
-      .setEmoji('⬅️')
+      .setEmoji('🔙')
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('nextPage')
-      .setEmoji('➡️')
+      .setEmoji('🔜')
       .setStyle(ButtonStyle.Secondary),
   );
 

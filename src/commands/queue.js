@@ -1,12 +1,11 @@
-import SongButtons from '../button/song.js';
+import { ComponentType } from 'discord.js';
 import { getMSG } from '../msg/index.js';
 import PageButtons from '../button/page.js';
-import { ComponentType } from 'discord.js';
-
+import SongButtons from '../button/song.js';
 
 const queueMap = global.queueMap;
-const timeExpired = 5 * 60 * 1000 // 5 phút
-const pageSize = 10
+const timeExpired = 5 * 60 * 1000; // 5 phút
+const pageSize = 10; // Số lượng bài hát trên mỗi trang
 
 // Hàm phân trang cho hàng đợi
 function paginateQueue(queue, pageSize = 10) {
@@ -16,6 +15,7 @@ function paginateQueue(queue, pageSize = 10) {
   }
   return pages;
 }
+
 
 export default async function queue(interaction) {
   try {
@@ -28,19 +28,19 @@ export default async function queue(interaction) {
     }
 
     // Chia hàng đợi thành các trang (mỗi trang 10 bài hát)
-    const pages = paginateQueue(queue, pageSize);
+    const pages = paginateQueue(queue, 10);
     let pageIndex = 0; // Bắt đầu từ trang đầu tiên
 
     // Tạo nội dung cho trang đầu tiên
     let pageContent = pages[pageIndex].map((song, index) => `**${index + 1}.** ${song.title}`).join('\n');
 
+    // Trả lời tương tác ban đầu để tránh lỗi InteractionNotReplied
     await interaction.deferReply();
 
     // Gửi trang đầu tiên
     let message = await interaction.editReply({
       content: getMSG('queue', `\n${pageContent}`),
       components: [PageButtons, SongButtons], // Đính kèm hành động nút
-      fetchReply: true,
     });
 
     // Nếu có nhiều trang, thêm nút điều hướng
@@ -65,13 +65,13 @@ export default async function queue(interaction) {
 
         // Cập nhật nội dung và nút điều hướng
         pageContent = pages[pageIndex].map((song, index) => {
-          const indexSong = pageSize * pageIndex + (index + 1)
-          return `**${indexSong}.** ${song.title}`
+          const songIndex = pageIndex * pageSize + index + 1;
+          return `**${songIndex}.** ${song.title}`
         }).join('\n');
-
+        
         await message.edit({
-          content: getMSG('queue', `\n${pageContent}`),
-          components: [PageButtons], // Cập nhật nút điều hướng
+          content: getMSG('queue', `\n${pageContent}\nTrang ${pageIndex + 1}/${pages.length}`),
+          components: [PageButtons, SongButtons], // Cập nhật nút điều hướng
         });
 
         collector.resetTimer();

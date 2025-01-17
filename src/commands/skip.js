@@ -9,24 +9,24 @@ export default async function skipTo(interaction) {
 
     // Kiểm tra xem người dùng có ở trong kênh voice không
     if (!member.voice.channel) {
-      return interaction.followUp('Bạn phải ở trong một kênh voice để bỏ qua bài hát!');
+      return interaction.followUp(getMSG('skipNotInVoice'));
     }
 
     // Lấy hàng đợi nhạc của server
     let queue = global.queueMap.get(guild.id);
     if (!queue || queue.length === 0) {
-      return interaction.followUp('Không có bài hát nào trong hàng đợi!');
+      return interaction.followUp(getMSG('notQueue'));
     }
 
     // Kiểm tra nếu chỉ số hợp lệ
     if (skipIndex < 1 || skipIndex > queue.length) {
-      return interaction.followUp('Chỉ số bài hát không hợp lệ!');
+      return interaction.followUp(getMSG('skipInvalidIndex'));
     }
 
     // Cập nhật lại vị trí hiện tại trong hàng đợi
     const player = global.playerMap.get(guild.id);
     if (!player) {
-      return interaction.followUp('Không có player hoạt động để bỏ qua bài!');
+      return interaction.followUp(getMSG('notPlaying'));
     }
 
     // Cập nhật trạng thái của player (skip đến bài hát chỉ số skipIndex - 1)
@@ -35,7 +35,7 @@ export default async function skipTo(interaction) {
     // Lấy bài hát cần phát từ hàng đợi
     const songToPlay = queue[player.currentSongIndex];
     if (!songToPlay) {
-      return interaction.followUp('Không tìm thấy bài hát cần phát!');
+      return interaction.followUp(getMSG('notFoundQuery'));
     }
 
     // Phát lại bài hát mới (sử dụng hàm playStream để phát lại)

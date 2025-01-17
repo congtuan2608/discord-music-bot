@@ -19,7 +19,7 @@ const BUTTONS = new ActionRowBuilder()
     new ButtonBuilder()
       .setCustomId('queue')
       .setLabel('📜 Danh sách phát')
-      .setStyle(ButtonStyle.Danger),
+      .setStyle(ButtonStyle.Secondary),
   );
 
 export default BUTTONS;

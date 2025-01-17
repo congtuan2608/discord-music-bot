@@ -1,4 +1,4 @@
-import play from "play-dl";
+import play from "../auth/youtube.js";
 import ytStream from "yt-stream";
 import nextSong from "./next.js";
 import { getMSG } from "../msg/index.js";
@@ -76,14 +76,19 @@ export default async function playSong(interaction) {
       }
     }
 
-    // Nếu chưa có bài hát nào đang phát, bắt đầu phát bài đầu tiên trong hàng đợi
-    if (!playerMap.has(guild.id)) {
-      await nextSong(interaction); // Gọi hàm để phát bài đầu tiên trong queue
+    if (queue.length === queries.length) {
+      if (!playerMap.has(guild.id)) {
+        await nextSong(interaction); // Gọi hàm để phát bài đầu tiên trong queue
+      } else {
+        interaction.followUp(`Đã thêm ${playerInfo.count} bài hát vào hàng đợi!`);
+      }
     } else {
       interaction.followUp(`Đã thêm ${playerInfo.count} bài hát vào hàng đợi!`);
     }
 
   } catch (error) {
+    console.error("Error playing song:", error);
+
     interaction.followUp(getMSG('error', error.message));
   }
 }

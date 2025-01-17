@@ -21,7 +21,7 @@ export default async function stop(interaction) {
     global.playerMap.delete(guild.id);
 
     // Thông báo cho người dùng
-    await interaction.followUp("⏹️ Kaoo đã dừng hát rồi đấy!!");
+    await interaction.followUp(getMSG('stop'));
     console.log(`⏹️ Bot đã dừng phát nhạc trong guild: ${guild.id}`);
   } catch (error) {
     console.error("Error in stopSong:", error);

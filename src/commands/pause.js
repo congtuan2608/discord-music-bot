@@ -6,12 +6,13 @@ export default async function pause(interaction) {
     const guildId = interaction.guildId;
 
     // Kiểm tra xem player có tồn tại không
-    const player = global.playerMap.get(guildId);
+    const playerData = global.playerMap.get(guildId);
 
-    if (!player) {
+    if (!playerData) {
       return interaction.reply({ content: getMSG('notPlaying'), ephemeral: true });
     }
 
+    const player = playerData.player;
     // Kiểm tra trạng thái của player
     if (player.state.status === AudioPlayerStatus.Paused) {
       return interaction.reply({ content: getMSG('paused'), ephemeral: true });
@@ -19,6 +20,7 @@ export default async function pause(interaction) {
 
     // Tạm dừng trình phát
     player.pause();
+
     await interaction.reply({ content: getMSG('pause') });
   } catch (error) {
     console.error("Error pausing song:", error);
