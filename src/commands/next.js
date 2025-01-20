@@ -2,7 +2,7 @@ import { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerSt
 import SongButtons from '../button/song.js';
 import { getMSG } from "../msg/index.js";
 
-export default async function nextSong(interaction) {
+export default async function nextSong(interaction, skipIndex = 0) {
   const { member, guild } = interaction;
 
   try {
@@ -23,7 +23,6 @@ export default async function nextSong(interaction) {
           messageId: message.id,
           player: null,
           channelId: null,
-          status: AudioPlayerStatus.Idle
         });
       }
       global.queueMap.delete(guild.id);
@@ -44,7 +43,7 @@ export default async function nextSong(interaction) {
     global.playerMap.set(guild.id, existingPlayerData);
 
     // Get the current song and remove it from the queue
-    const currentSong = queue.shift();
+    const currentSong = queue.splice(skipIndex, 1)[0];
 
     // Connect to the voice channel
     const connection = joinVoiceChannel({
@@ -60,11 +59,11 @@ export default async function nextSong(interaction) {
       messageId: null,
     });
 
-    // Subscribe the player to the connection
-    connection.subscribe(player);
-
     // Create an audio resource from the song's stream
     const resource = createAudioResource(currentSong.stream.stream, { inputType: currentSong.stream.type });
+    
+    // Subscribe the player to the connection
+    connection.subscribe(player);
     player.play(resource);
 
     // Send the message and save its ID for later updates

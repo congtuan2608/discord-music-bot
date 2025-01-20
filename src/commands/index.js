@@ -4,6 +4,8 @@ import next from "./next.js";
 import stop from "./stop.js";
 import pause from "./pause.js";
 import resume from "./resume.js";
+import skipTo from "./skip.js";
+import sayText from "./say.js";
 
 
 const COMMANDS = {
@@ -34,16 +36,40 @@ const COMMANDS = {
     description: "Danh sách bài hát đang chờ",
     options: []
   },
-  pause:{
+  pause: {
     func: pause,
     description: "Tạm dừng bài hát",
     options: []
   },
-  resume:{
+  resume: {
     func: resume,
     description: "Tiếp tục bài hát",
     options: []
   },
+  skip: {
+    func: skipTo,
+    description: "Bỏ qua bài hát",
+    options: [
+      {
+        name: "index",
+        description: "Chỉ số bài hát cần bỏ qua",
+        type: 3,
+        required: true,
+      },
+    ],
+  },
+  say: {
+    func: sayText,
+    description: "Nói gì đó",
+    options: [
+      {
+        name: "content",
+        description: "Nội dung cần nói",
+        type: 3,
+        required: false,
+      },
+    ],
+  }
 }
 
 export default COMMANDS;

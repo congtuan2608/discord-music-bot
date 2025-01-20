@@ -39,7 +39,7 @@ export default async function queue(interaction) {
 
     // Gửi trang đầu tiên
     let message = await interaction.editReply({
-      content: getMSG('queue', `\n${pageContent}`),
+      content: getMSG('queue', `\n${pageContent}`, { bold: true }),
       components: [PageButtons, SongButtons], // Đính kèm hành động nút
     });
 
@@ -68,9 +68,9 @@ export default async function queue(interaction) {
           const songIndex = pageIndex * pageSize + index + 1;
           return `**${songIndex}.** ${song.title}`
         }).join('\n');
-        
+
         await message.edit({
-          content: getMSG('queue', `\n${pageContent}\nTrang ${pageIndex + 1}/${pages.length}`),
+          content: getMSG('queue', `\n${pageContent}\nTrang ${pageIndex + 1}/${pages.length}`, { bold: true }),
           components: [PageButtons, SongButtons], // Cập nhật nút điều hướng
         });
 
@@ -80,7 +80,7 @@ export default async function queue(interaction) {
       collector.on('end', async () => {
         // Xóa tất cả nút điều hướng
         await message.edit({
-          content: getMSG('queue', `\n${pageContent}`),
+          content: getMSG('queue', `\n${pageContent}`, { bold: true }),
           components: [],
         });
       }); // Kết thúc lắng nghe sự kiện

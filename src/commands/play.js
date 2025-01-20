@@ -48,6 +48,7 @@ export default async function playSong(interaction) {
 
         const map = await Promise.all(playlist.videos.map(async (video) => {
           const stream = await ytStream.stream(video.url);
+          
           return { title: video.title, stream };
         }));
 
@@ -59,6 +60,7 @@ export default async function playSong(interaction) {
       else if (play.yt_validate(trimmedQuery) === "video") {
         const videoInfo = await play.video_info(trimmedQuery);
         const stream = await ytStream.stream(trimmedQuery);
+        
         queue.push({ title: videoInfo.video_details.title || 'unknown', stream });
         playerInfo.count += 1;
       }

@@ -13,7 +13,15 @@ export default async function stop(interaction) {
     // Kiểm tra xem bot có đang ở trong kênh voice hay không
     const connection = getVoiceConnection(guild.id);
     if (!connection) {
-      return interaction.followUp(getMSG('notInVoice'));
+      return interaction.followUp(getMSG('notInVoice'), { ephemeral: true });
+    }
+
+    // Kiểm tra xem player có tồn tại không
+    const playerData = global.playerMap.get(guild.id);
+
+    if (playerData) {
+      // Tạm dừng trình phát
+      playerData.player.pause();
     }
 
     // Xóa hàng đợi và audio player
@@ -26,9 +34,9 @@ export default async function stop(interaction) {
   } catch (error) {
     console.error("Error in stopSong:", error);
     if (!interaction.replied) {
-      await interaction.reply(getMSG('error', error.message));
+      await interaction.reply(getMSG('error', error.message), { ephemeral: true });
     } else {
-      await interaction.followUp(getMSG('error', error.message));
+      await interaction.followUp(getMSG('error', error.message), { ephemeral: true });
     }
   }
 }

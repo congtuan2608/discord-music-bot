@@ -29,14 +29,22 @@ const MSG = {
   noQuery: 'Hãy nhập tên bài hát hoặc link YouTube!',
   notFoundQuery: '❌ Không tìm thấy bài hát này',
   notInChannel: '❌ Mài phải ở trong kênh voice để kaoo hát cho nghe!',
+  // say
+  say: 'Kaoo nói: ',
+  noText: 'Mày không nhập nội dung thì tao nói cái lồn gì?',
 }
 
 function getMSG(key, msg, options) {
+  const defaultOptions = {
+    bold: false,
+    ...options
+  }
+
   let msgFromObj = MSG[key]
 
   // make msg bold
-  if(options?.bold){
-    msgFromObj = `**${msg}**`
+  if(defaultOptions?.bold){
+    msgFromObj = `**${msgFromObj}**`
   }
 
   return msgFromObj + (msg ? `: ${msg}` : '');
