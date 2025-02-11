@@ -1,6 +1,13 @@
-import play from "play-dl";
+import { google } from "googleapis";
+import ytStream from "yt-stream";
+import dotenv from "dotenv";
+dotenv.config();
 
-// Thiết lập xác thực
-play.authorization();
+const YoutubeGoogle = google.youtube({
+  version: 'v3',
+  auth: process.env.YOUTUBE_API_KEY
+});
 
-export default play;
+// ytStream.setApiKey(process.env.YOUTUBE_API_KEY);
+
+export { ytStream, YoutubeGoogle }

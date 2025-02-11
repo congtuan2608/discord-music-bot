@@ -1,5 +1,5 @@
-import play from "../auth/youtube.js";
-import ytStream from "yt-stream";
+import play from "play-dl";
+import { ytStream } from '../auth/youtube.js'
 import nextSong from "./next.js";
 import { getMSG } from "../msg/index.js";
 
@@ -43,12 +43,16 @@ export default async function playSong(interaction) {
 
       // Kiểm tra nếu query là URL YouTube có tham số list (playlist)
       if (play.yt_validate(trimmedQuery) === "playlist") {
-        const playlist = await play.playlist_info(q); // Lấy thông tin playlist
-        playerInfo.count += playlist.videos.length; // Tăng số lượng bài hát
+        let playlist = await play.playlist_info(q); // Lấy thông tin playlist
 
-        const map = await Promise.all(playlist.videos.map(async (video) => {
+        playlist = playlist.videos
+
+
+        playerInfo.count += playlist.length; // Tăng số lượng bài hát
+
+        const map = await Promise.all(playlist.map(async (video) => {
           const stream = await ytStream.stream(video.url);
-          
+
           return { title: video.title, stream };
         }));
 
@@ -59,8 +63,9 @@ export default async function playSong(interaction) {
       // Kiểm tra nếu query là video YouTube URL
       else if (play.yt_validate(trimmedQuery) === "video") {
         const videoInfo = await play.video_info(trimmedQuery);
+        // const stream = await ytStream.stream(trimmedQuery);
         const stream = await ytStream.stream(trimmedQuery);
-        
+
         queue.push({ title: videoInfo.video_details.title || 'unknown', stream });
         playerInfo.count += 1;
       }
@@ -91,7 +96,7 @@ export default async function playSong(interaction) {
   } catch (error) {
     console.error("Error playing song:", error);
 
-    interaction.followUp(getMSG('error', error.message));
+    interaction.followUp(getMSG('error', error));
   }
 }
 
