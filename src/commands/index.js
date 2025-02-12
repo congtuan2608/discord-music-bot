@@ -6,6 +6,7 @@ import pause from "./pause.js";
 import resume from "./resume.js";
 import skipTo from "./skip.js";
 import sayText from "./say.js";
+import join from "./join.js";
 
 
 const COMMANDS = {
@@ -69,6 +70,11 @@ const COMMANDS = {
         required: false,
       },
     ],
+  },
+  join:{
+    func: join,
+    description: "Tham gia kênh voice",
+    options: []
   }
 }
 
