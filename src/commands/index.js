@@ -7,6 +7,7 @@ import resume from "./resume.js";
 import skipTo from "./skip.js";
 import sayText from "./say.js";
 import join from "./join.js";
+import guessTheWord from "./guess-word.js";
 
 
 const COMMANDS = {
@@ -71,10 +72,28 @@ const COMMANDS = {
       },
     ],
   },
-  join:{
+  join: {
     func: join,
     description: "Tham gia kênh voice",
     options: []
+  },
+  'guess-the-word': {
+    func: guessTheWord,
+    description: "Chơi game đoán từ",
+    options: [
+      {
+        name: "word",
+        description: "Nối từ với từ cuối cùng",
+        type: 3,
+        required: true,
+      },
+      {
+        name: "restart",
+        description: "Bắt đầu lại từ đầu",
+        type: 5,
+        required: false,
+      }
+    ]
   }
 }
 

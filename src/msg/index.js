@@ -32,6 +32,14 @@ const MSG = {
   // say
   say: 'Kaoo nói: ',
   noText: 'Mày không nhập nội dung thì tao nói cái lồn gì?',
+
+  // guess word
+  guessWord: '🎮 Game đoán từ',
+  requireWord: 'Mày hãy nhập từ vào!',
+  requireTwoWords: 'Từ phải có 2 từ chứ thằng lz!',
+  notValidWord: 'Từ này đéo không hợp lệ, phải bắt đầu bằng từ cuối cùng của từ trước!',
+  guessedWord: 'Từ này đã được sử dụng rồi!',
+  notFoundNextWord: 'Không tìm thấy từ tiếp theo! Tao chịu đấy!',
 }
 
 function getMSG(key, msg, options) {
