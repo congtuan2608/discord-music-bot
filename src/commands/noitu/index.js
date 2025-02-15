@@ -1,4 +1,4 @@
-import noiTu from "./noi-tu";
+import noiTu from "./noi-tu.js";
 
 const COMMANDS = {
   'noi-tu': {
