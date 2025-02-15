@@ -1,7 +1,7 @@
 import play from "play-dl";
-import { ytStream } from '../auth/youtube.js'
+import { ytStream } from '../../auth/youtube.js'
 import nextSong from "./next.js";
-import { getMSG } from "../msg/index.js";
+import { getMSG } from "../../msg/index.js";
 
 const queueMap = global.queueMap;
 const playerMap = global.playerMap;

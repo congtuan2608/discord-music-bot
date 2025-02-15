@@ -1,4 +1,4 @@
-import { getMSG } from "../msg/index.js";
+import { getMSG } from "../../msg/index.js";
 import nextSong from "./next.js";
 
 

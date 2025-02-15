@@ -1,65 +1,16 @@
-import play from "./play.js";
-import queue from "./queue.js";
-import next from "./next.js";
-import stop from "./stop.js";
-import pause from "./pause.js";
-import resume from "./resume.js";
-import skipTo from "./skip.js";
 import sayText from "./say.js";
-import guessTheWord from "./guess-word.js";
+import SONG_COMMANDS from "./song/index.js";
+import NOT_TU_COMMANDS from "./noitu/index.js";
 import XI_DACH_COMMANDS from "./xi-dach/index.js";
 
-
 const COMMANDS = {
-  play: {
-    func: play,
-    description: "Phát bài hát từ youtube",
-    options: [
-      {
-        name: "song",
-        description: "Tên bài hát hoặc link youtube",
-        type: 3,
-        required: true,
-      },
-    ],
-  },
-  stop: {
-    func: stop,
-    description: "Dừng bài hát đang phát",
-    options: []
-  },
-  next: {
-    func: next,
-    description: "Chuyển bài hát",
-    options: []
-  },
-  queue: {
-    func: queue,
-    description: "Danh sách bài hát đang chờ",
-    options: []
-  },
-  pause: {
-    func: pause,
-    description: "Tạm dừng bài hát",
-    options: []
-  },
-  resume: {
-    func: resume,
-    description: "Tiếp tục bài hát",
-    options: []
-  },
-  skip: {
-    func: skipTo,
-    description: "Bỏ qua bài hát",
-    options: [
-      {
-        name: "index",
-        description: "Chỉ số bài hát cần bỏ qua",
-        type: 3,
-        required: true,
-      },
-    ],
-  },
+  // ========= SONG =========
+  ...SONG_COMMANDS,
+  // ========= GAME: NỐI TỪ =========
+  ...NOT_TU_COMMANDS,
+  // ========= GAME: XÌ LÁT =========
+  ...XI_DACH_COMMANDS,
+  // ========= OTHERS =========
   say: {
     func: sayText,
     description: "Nói gì đó",
@@ -72,27 +23,6 @@ const COMMANDS = {
       },
     ],
   },
-  // ========= GAME: NỐI TỪ =========
-  'guess-the-word': {
-    func: guessTheWord,
-    description: "Chơi game đoán từ",
-    options: [
-      {
-        name: "word",
-        description: "Nối từ với từ cuối cùng",
-        type: 3,
-        required: true,
-      },
-      {
-        name: "restart",
-        description: "Bắt đầu lại từ đầu",
-        type: 5,
-        required: false,
-      }
-    ]
-  },
-  // ========= GAME: XÌ LÁT =========
-  ...XI_DACH_COMMANDS
 }
 
 export default COMMANDS;

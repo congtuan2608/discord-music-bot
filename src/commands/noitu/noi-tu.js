@@ -1,5 +1,5 @@
-import { getMSG } from "../msg/index.js";
-import { WORDS } from "../data/words/words.js";
+import { getMSG } from "../../msg/index.js";
+import { WORDS } from "../../data/words/words.js";
 
 // con chó => chó
 // chó chết => chết
@@ -12,7 +12,7 @@ function getTheWord(params) {
   if (!WORDS[secondWord]) return null
 
   // Get the list of next words
-  let listNextWords = params?.listNextWords || WORDS[secondWord] ;
+  let listNextWords = params?.listNextWords || WORDS[secondWord];
 
   // Check if the old word is valid
   if (!oldWord) return null
@@ -36,7 +36,7 @@ function getTheWord(params) {
 }
 
 
-export default async function guessTheWord(interaction) {
+export default async function noiTu(interaction) {
   try {
     const { options, member, guild } = interaction;
     let oldWord = options.getString("word").trim().toLowerCase();
@@ -45,8 +45,6 @@ export default async function guessTheWord(interaction) {
     if (restart) {
       global.guessWordMap.delete(guild.id);
     }
-
-    console.log(`Guess the word - ${member.nickname}:`, oldWord);
 
     if (!oldWord) {
       return interaction.followUp(getMSG('requireWord'));
@@ -106,8 +104,11 @@ export default async function guessTheWord(interaction) {
       content: `**${member.nickname}:** ${oldWord}\n**Bot:** ${nextWord}`,
       // components: [SongButtons],
     });
-    console.log(`Guess the word - Bot:`, nextWord);
 
+    // ================== LOGS ==================
+    console.log(`Nối từ - ${member.nickname}:`, oldWord);
+    console.log(`Nối từ - Bot:`, nextWord);
+    // ================== LOGS ==================
 
   } catch (error) {
     console.error(getMSG('error', error.message));
