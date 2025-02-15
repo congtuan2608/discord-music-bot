@@ -1,5 +1,5 @@
 import { ComponentType } from 'discord.js';
-import { getMSG } from '../msg/index.js';
+import { getMSG } from "../../msg/index.js";
 import PageButtons from '../button/page.js';
 import SongButtons from '../button/song.js';
 

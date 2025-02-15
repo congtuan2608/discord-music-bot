@@ -1,5 +1,5 @@
 import { getVoiceConnection } from "@discordjs/voice";
-import { getMSG } from "../msg/index.js";
+import { getMSG } from "../../msg/index.js";
 
 export default async function stop(interaction) {
   const { guild } = interaction;

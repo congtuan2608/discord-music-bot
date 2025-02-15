@@ -1,5 +1,5 @@
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { getMSG } from "../msg/index.js";
+import { getMSG } from "../../msg/index.js";
 
 export default async function pause(interaction) {
   try {
