@@ -1,7 +1,7 @@
 
 const MSG = {
   // error
-  error: '❌ Cứu kaoo, hết hát được rồi',
+  error: '❌ Có lỗi xảy ra!',
   // queue
   queue: 'À, kaoo nhớ rồi nè, đây là danh sách bài hát đang chờ',
   notQueue: '❌ Kaoo không nhớ được bài hát nào trong hàng đợi cả',
@@ -40,6 +40,28 @@ const MSG = {
   notValidWord: 'Từ này đéo không hợp lệ, phải bắt đầu bằng từ cuối cùng của từ trước!',
   guessedWord: 'Từ này đã được sử dụng rồi!',
   notFoundNextWord: 'Không tìm thấy từ tiếp theo! Tao chịu đấy!',
+
+  // xi dach
+  xiDach: '🎮 Game xì dách',
+  joinSuccess: 'Tham gia game thành công!',
+  joinError: 'Có lỗi khi tham gia game!',
+  alreadyJoin: 'Mày đã tham gia game rồi!',
+  startGame: 'Bắt đầu game!',
+  notEnoughPlayers: 'Không đủ người chơi!',
+  notInGame: 'Mày không ở trong game!',
+  notYourTurn: 'Chưa đến lượt mày!',
+  notValidCard: 'Lá bài không hợp lệ!',
+  notValidAction: 'Hành động không hợp lệ!',
+  getCardSuccess: 'Rút bài thành công!',
+  maxLengthCard: 'Mày đã rút đủ số lượng lá bài! (5 lá)',
+  skipTurn: 'Bỏ lượt rút bài!',
+  gameNotStarted: 'Game chưa bắt đầu!',
+  gameStarted: 'Game đã bắt đầu!',
+  roomNotCreated: 'Phòng chơi chưa được tạo!',
+  noCard: 'Không có lá bài nào!',
+  notYourTurn: 'Chưa đến lượt mày!',
+  gameStatus: 'Trạng thái game',
+  notRoomOwner: 'Mày không phải chủ phòng!',
 }
 
 function getMSG(key, msg, options) {

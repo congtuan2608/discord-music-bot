@@ -6,8 +6,8 @@ import pause from "./pause.js";
 import resume from "./resume.js";
 import skipTo from "./skip.js";
 import sayText from "./say.js";
-import join from "./join.js";
 import guessTheWord from "./guess-word.js";
+import XI_DACH_COMMANDS from "./xi-dach/index.js";
 
 
 const COMMANDS = {
@@ -72,11 +72,7 @@ const COMMANDS = {
       },
     ],
   },
-  join: {
-    func: join,
-    description: "Tham gia kênh voice",
-    options: []
-  },
+  // ========= GAME: NỐI TỪ =========
   'guess-the-word': {
     func: guessTheWord,
     description: "Chơi game đoán từ",
@@ -94,7 +90,9 @@ const COMMANDS = {
         required: false,
       }
     ]
-  }
+  },
+  // ========= GAME: XÌ LÁT =========
+  ...XI_DACH_COMMANDS
 }
 
 export default COMMANDS;
