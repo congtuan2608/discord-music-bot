@@ -1,7 +1,7 @@
 import { ComponentType } from 'discord.js';
 import { getMSG } from "../../msg/index.js";
-import PageButtons from '../button/page.js';
-import SongButtons from '../button/song.js';
+import PageButtons from '../../button/page.js';
+import SongButtons from '../../button/song.js';
 
 const queueMap = global.queueMap;
 const timeExpired = 5 * 60 * 1000; // 5 phút

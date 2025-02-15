@@ -1,5 +1,5 @@
 import { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } from "@discordjs/voice";
-import SongButtons from '../button/song.js';
+import SongButtons from '../../button/song.js';
 import { getMSG } from "../../msg/index.js";
 
 export default async function nextSong(interaction, skipIndex = 0) {
